@@ -1,13 +1,4 @@
 {
-	"nodes":[
-		{"id":"bbc1995084a24fb9","x":-557,"y":-306,"width":250,"height":60,"type":"text","text":"test"},
-		{"id":"da512aa87f826af3","x":-200,"y":-306,"width":250,"height":60,"type":"text","text":"test"},
-		{"id":"8410edc68d430b96","x":-369,"y":-8,"width":250,"height":60,"type":"text","text":"test"},
-		{"id":"d6bf7a5ffad15e91","x":-78,"y":-54,"width":250,"height":60,"type":"text","text":"test"}
-	],
-	"edges":[
-		{"id":"7c5957c3a6a350b1","fromNode":"da512aa87f826af3","fromSide":"left","toNode":"bbc1995084a24fb9","toSide":"right"},
-		{"id":"c2d28c49d2061af2","fromNode":"8410edc68d430b96","fromSide":"top","toNode":"bbc1995084a24fb9","toSide":"bottom"},
-		{"id":"a45249cfec07394a","fromNode":"d6bf7a5ffad15e91","fromSide":"top","toNode":"da512aa87f826af3","toSide":"bottom"}
-	]
+	"nodes":[],
+	"edges":[]
 }
