@@ -6,7 +6,8 @@
 		{"id":"3d96757ca193727d","x":-320,"y":-560,"width":250,"height":60,"type":"text","text":"compiler-sfc"},
 		{"id":"05cf4150d2873cb2","x":-160,"y":-102,"width":250,"height":60,"type":"text","text":"runtime-core"},
 		{"id":"da6b5989c9fc7e23","x":-500,"y":-102,"width":250,"height":60,"type":"text","text":"runtime-dom"},
-		{"id":"c1ad87b0adb88b06","x":280,"y":-102,"width":250,"height":60,"type":"text","text":"reactivity"}
+		{"id":"c1ad87b0adb88b06","x":280,"y":-102,"width":250,"height":60,"type":"text","text":"reactivity"},
+		{"id":"515ea0309010daf2","x":580,"y":-300,"width":250,"height":50,"type":"text","text":""}
 	],
 	"edges":[
 		{"id":"dd3dbecd149839bd","fromNode":"7112c7f748940daa","fromSide":"top","toNode":"47e025159e7a3e5b","toSide":"left"},
