@@ -75,3 +75,25 @@ it('stop', () => {
 ### 
 1. stop runner
 2. effect -> deps 清空
+
+
+## onStop
+### UT
+```javascript
+it('events: onStop', () => {
+    const onStop = jest.fn();
+    const runner = effect(() => {}, {
+      onStop,
+    });
+
+    stop(runner);
+    expect(onStop).toHaveBeenCalled();
+  });
+
+```
+
+### 
+1. effect 第二个参数中 传入一个 onStop
+2. 绑定在 effect 对象上，在 stop 调用时判断是否存在 onStop，存在即调用
+
+export const extend = Object.assign
