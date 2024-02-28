@@ -14,6 +14,11 @@
         expect(r).toBe('foo')
     })
 ```
+###
+1. effect() return runner
+2. const r = runner() == effect.run() 
+3. effect.run return this._fn()
+
 ## scheduler
 ### UT
 ```javascript
@@ -43,6 +48,10 @@ it('scheduler', () => {
         expect(dummy).toBe(2);
 });
 ```
+###
+1. 通过 effect 的第二个参数 传入scheduler
+2. effect 第一次正常执行 fn
+3. 当响应式数据发生 set 时，执行 scheduler
 ## stop
 ### UT
 ```javascript
@@ -63,3 +72,6 @@ it('stop', () => {
     expect(dummy).toBe(3);
   });
 ```
+### 
+1. stop runner
+2. effect -> deps 清空
