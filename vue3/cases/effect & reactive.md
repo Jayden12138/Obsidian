@@ -19,3 +19,21 @@ describe('reactive', () => {
 })
 ```
 
+##
+```
+reactive(raw) -> return Proxy {get set}
+
+get track 收集依赖
+set trigger 触发依赖
+
+effect(fn) -> class ReactiveEffect{} run() 
+
+targetMap -> depsMap -> dep
+targetMap{target -> depsMap{key -> dep}}
+
+Reflect.get()
+Reflect.set()
+
+```
+
+
