@@ -62,4 +62,7 @@ reactive()
 value isObject -> reactive(value) : value
 
 ==> hasChanged 需要修改
-存储rawValue（没有进行处理过的）
+存储_rawValue（没有进行处理过的）
+
+
+
