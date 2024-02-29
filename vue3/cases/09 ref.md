@@ -34,6 +34,11 @@ it('should be reactive', () => {
 ```
 
 
+trackEffect
+triggerEffect
+
+hasChanged（Object.is(value1, value2)） -> triggerEffect
+
 # nested object
 
 ## UT
@@ -52,3 +57,9 @@ it('should make nested properties reactive', () => {
 });
 ```
 
+reactive()
+
+value isObject -> reactive(value) : value
+
+==> hasChanged 需要修改
+存储rawValue（没有进行处理过的）
