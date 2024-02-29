@@ -15,7 +15,7 @@
 		{"id":"6df84dc095f1117c","type":"text","text":"[[06 reactive readonly - nested object]]","x":720,"y":-42,"width":250,"height":60},
 		{"id":"9a6c4c0d338c3c52","type":"text","text":"[[07 shallowReadonly]]","x":720,"y":18,"width":250,"height":60},
 		{"id":"145454f4018bb711","type":"text","text":"[[08 isProxy]]","x":720,"y":78,"width":250,"height":60},
-		{"id":"c0643adedf17b544","type":"text","text":"ref","x":717,"y":138,"width":250,"height":60},
+		{"id":"c0643adedf17b544","type":"text","text":"[[09 ref]]","x":717,"y":138,"width":250,"height":60},
 		{"id":"d17b2311721ccad8","type":"text","text":"isRef & unRef","x":717,"y":198,"width":250,"height":60},
 		{"id":"bb485120b57b16cd","type":"text","text":"computed","x":717,"y":308,"width":250,"height":60},
 		{"id":"a4d7ace7231d3014","type":"text","text":"proxyRefs","x":717,"y":258,"width":250,"height":50},
