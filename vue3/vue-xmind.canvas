@@ -11,7 +11,7 @@
 		{"id":"515ea0309010daf2","type":"text","text":"[[01 effect & reactive]]","x":720,"y":-328,"width":250,"height":60},
 		{"id":"e4df8de223e61abf","type":"text","text":"[[03 readonly]]","x":720,"y":-208,"width":250,"height":56},
 		{"id":"add78915979a4989","type":"text","text":"[[04 isReactive & isReadonly]]","x":720,"y":-152,"width":250,"height":60},
-		{"id":"346de4089dca4ab0","type":"text","text":"12 优化 stop","x":900,"y":-92,"width":250,"height":50},
+		{"id":"346de4089dca4ab0","type":"text","text":"[[05 优化 stop]]","x":900,"y":-92,"width":250,"height":50},
 		{"id":"6df84dc095f1117c","type":"text","text":"reactive readonly - nested object","x":720,"y":-42,"width":250,"height":60},
 		{"id":"9a6c4c0d338c3c52","type":"text","text":"shallowReadonly","x":720,"y":18,"width":250,"height":60},
 		{"id":"145454f4018bb711","type":"text","text":"isProxy","x":720,"y":78,"width":250,"height":60},
