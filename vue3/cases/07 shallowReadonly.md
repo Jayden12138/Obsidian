@@ -33,3 +33,21 @@ it('happy path', () => {
 })
 ```
 
+shallowReadonly 
+处理嵌套对象时，只有第一层时 readonly，嵌套的对象不予处理
+和 readonly 一样，也不允许 set
+
+
+在 添加 readonly 时，对 reactive 和 readonly 的 get set 进行了重构，通过 createGetter 进行创建 get 方法
+
+createGetter(isReadonly, shallow)
+
+添加一个入参 shallow，来判断是否是 shallowReadonly，如果是 shallowReadonly，则不进行处理嵌套对象，也不进行 track 依赖的收集（因为不能 set 也就不需要在 get 的时候进行依赖收集）
+
+这里因为 shallowReadonly 和 readonly 的 set 一样，所以直接使用了 extend (== Object.assign)，复用了 readonly 上的 set 方法，重写了 get 方法
+```javascript
+extend({}, readonlyHandlers, {
+	get: ShallowReadonlyHandlers
+})
+```
+
