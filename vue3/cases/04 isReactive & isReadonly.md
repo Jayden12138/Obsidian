@@ -1,0 +1,28 @@
+# isReactive
+## UT
+```javascript
+
+it('isReactive happy path', () => {
+	const original = { foo: 1 }
+	const observed = reactive(original)
+	expect(observed).not.toBe(original)
+	expect(observed.foo).toBe(1)
+	expect(isReactive(observed)).toBe(true)
+	expect(isReactive(original)).toBe(false)
+})
+
+```
+
+# isReadonly
+## UT
+```javascript
+
+it('isReadonly happy path', () => {
+	const observed = readonly(original)
+	expect(observed).not.toBe(original)
+	expect(observed.foo).toBe(1)
+	expect(isReadonly(observed)).toBe(true)
+	expect(isReadonly(original)).toBe(false)
+})
+
+```
