@@ -6,9 +6,26 @@ it('happy path', () => {
 	expect(a.value).toBe(1)
 })
 ```
+## 思路
 
+因为 ref 也需要收集依赖 触发依赖
+但是相比 reactive 而言，reactive 是接收一个对象，通过 创建 proxy 代理，通过 get 和 set 方法来收集依赖以及触发依赖
+但是 ref 接受的是基础类型，例如 1 、 '123'
+这些并没有 get set 来进行控制
+所以通过 class 来创建
 
-class
+```javascript
+class RefImpl{
+	get value(){}
+	set value(newValue){}
+}
+```
+
+在实现 effect 时，通过创建targetMap{target -> depsMap{key -> dep}} 进行收集依赖
+但当前 ref 并没有对应的 target key
+所以在 class 中定义一个 deps 来保存依赖
+
+这里需要把 effect 中原来的 track 和 trigger 进行重构，将 dep 相关的抽离出来，（相同逻辑进行复用）=> trackEffect / triggerEffect
 
 # should be reactive
 ## UT
@@ -33,11 +50,9 @@ it('should be reactive', () => {
 });
 ```
 
+1. 触发 set 时，需要执行 trigger
+2. 当 value 没有发生改变的话，不执行 trigger（复用isTracking）
 
-trackEffect
-triggerEffect
-
-hasChanged（Object.is(value1, value2)） -> triggerEffect
 
 # nested object
 
