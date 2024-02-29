@@ -8,6 +8,7 @@ it('happy path', () => {
 ```
 
 
+class
 
 # should be reactive
 ## UT
