@@ -1,3 +1,4 @@
+## init 
 ```shell
 yarn init -y
 
@@ -65,5 +66,48 @@ module.exports = {
 };
 ```
 
+
+
+## rollup
+```shell
+yarn add rollup --dev
+
+yarn add @rollup/plugin-typescript --dev
+
+// rollup.config.js
+import typescript from '@rollup/plugin-typescript'
+
+export default{
+	input: "./src/index.ts",
+	output: [
+		{
+			format: 'cjs',
+			file: 'lib/gudie-mini-vue.cjs.js'
+		},
+		{
+			format: 'esm',
+			file: 'lib/gudie-mini-vue.esm.js'
+		},
+	],
+	plugins: [typescript()]
+}
+
+// package.json
+
+"script": {
+	"build": "rollup -c rollup.config.js"
+}
+
+yarn build
+
+yarn add tslib --dev
+
+
+// tsconfig.json
+"module": "esnext"
+
+
+
+```
 
 

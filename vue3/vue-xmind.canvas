@@ -22,7 +22,8 @@
 		{"id":"14b7878746684816","type":"text","text":"effect runner","x":1100,"y":-388,"width":250,"height":60},
 		{"id":"f98771ee44a0b16b","type":"text","text":"effect scheduler","x":1100,"y":-298,"width":250,"height":60},
 		{"id":"c6a721eee8f8dbf0","type":"text","text":"effect stop","x":1100,"y":-208,"width":250,"height":50},
-		{"id":"299298a7d1ee1287","type":"text","text":"effect onStop","x":1102,"y":-137,"width":250,"height":60}
+		{"id":"299298a7d1ee1287","type":"text","text":"effect onStop","x":1102,"y":-137,"width":250,"height":60},
+		{"id":"b295603444b2461a","type":"text","text":"[[13 init component 主流程.canvas|13 init component 主流程]]","x":-625,"y":600,"width":250,"height":60}
 	],
 	"edges":[
 		{"id":"dd3dbecd149839bd","fromNode":"7112c7f748940daa","fromSide":"top","toNode":"47e025159e7a3e5b","toSide":"left"},
@@ -46,6 +47,7 @@
 		{"id":"0699c6125fac20c6","fromNode":"c1ad87b0adb88b06","fromSide":"right","toNode":"a4d7ace7231d3014","toSide":"left"},
 		{"id":"ea658a239cdba955","fromNode":"c1ad87b0adb88b06","fromSide":"right","toNode":"bb485120b57b16cd","toSide":"left"},
 		{"id":"8c48e3ecac1ef0a8","fromNode":"c1ad87b0adb88b06","fromSide":"right","toNode":"515ea0309010daf2","toSide":"left"},
-		{"id":"217da596fe8d351d","fromNode":"6238df4fb5596726","fromSide":"right","toNode":"299298a7d1ee1287","toSide":"left"}
+		{"id":"217da596fe8d351d","fromNode":"6238df4fb5596726","fromSide":"right","toNode":"299298a7d1ee1287","toSide":"left"},
+		{"id":"1da98728e89b9660","fromNode":"05cf4150d2873cb2","fromSide":"bottom","toNode":"b295603444b2461a","toSide":"top"}
 	]
 }
