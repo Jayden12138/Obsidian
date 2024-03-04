@@ -3,10 +3,10 @@
 		{"id":"c1ad87b0adb88b06","type":"text","text":"[[目录#reactivity|reactivity]]","x":280,"y":-102,"width":200,"height":60},
 		{"id":"7112c7f748940daa","type":"text","text":"vue（[[setup 环境]]）","x":-820,"y":-267,"width":250,"height":60},
 		{"id":"47e025159e7a3e5b","type":"text","text":"compiler-dom","x":-487,"y":-400,"width":250,"height":60},
-		{"id":"a98e1f51f9823dea","type":"text","text":"compiler-core","x":-147,"y":-400,"width":250,"height":60},
+		{"id":"a98e1f51f9823dea","type":"text","text":"[[目录#compiler-core|compiler-core]]","x":-147,"y":-400,"width":250,"height":60},
 		{"id":"3d96757ca193727d","type":"text","text":"compiler-sfc","x":-307,"y":-560,"width":250,"height":60},
 		{"id":"05cf4150d2873cb2","type":"text","text":"[[目录#runtime-core|runtime-core]]","x":-147,"y":-102,"width":250,"height":60},
-		{"id":"da6b5989c9fc7e23","type":"text","text":"runtime-dom","x":-487,"y":-102,"width":250,"height":60}
+		{"id":"da6b5989c9fc7e23","type":"text","text":"[[目录#runtime-dom|runtime-dom]]","x":-487,"y":-102,"width":250,"height":60}
 	],
 	"edges":[
 		{"id":"dd3dbecd149839bd","fromNode":"7112c7f748940daa","fromSide":"top","toNode":"47e025159e7a3e5b","toSide":"left"},
