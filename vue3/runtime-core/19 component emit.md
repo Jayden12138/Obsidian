@@ -36,7 +36,10 @@ vnode = {
 }
 
 function emit(instance, event, ...args){}
-// emit('add', 1, 2)
+// 调用：emit('add', 1, 2)
+// 这里并没有去传入instance
+
+// emit
 // 'add' -> 'onAdd' -> instance.props['onAdd'](...args)
 // 'add-foo' -> 'addFoo' -> 'onAddFoo'
 
@@ -54,20 +57,23 @@ mountComponent(vnode, container)
 // 1. createComponentInstance 2. setupComponent 3. setupRenderEffect
 instance = createComponentInstance(initialVNode) // 创建组件实例
 
-instance = {
+// function createComponentInstance
+component = {
 	vnode,
 	type: vnode.type,
 	props: {},
 	slots: {},
 	emit: () => {}
 }
-instance.emit = emit.bind(null, instance)  (***)
+component.emit = emit.bind(null, component)  (***)
 
 setupComponent(instance)
 // 1. initProps 2. initSlots 3. setupStatefulComponent
 initProps() // instance.props = instance.vnode.props
 initSlots() // instance.slots = instance.vnode.children
 setupStatefulComponent()
+
+
 
 
 
