@@ -6,6 +6,7 @@
 #### 1. 绑定this
 
 
+
 #### 2. partially applied - 部分函数
 >一个较为通用的函数，通过bind固定了某个入参，得到的新的较为不通用的函数，称为部分函数
 
@@ -70,47 +71,4 @@ user.sayNow("Hello"); // [xx:xx] John to Jayden: Hello
 
 ```
 
-扩展partial函数，让他也可以接受`_`参数作为placeholder
-
-```javascript
-
-
-
-function partial(func, ...argsBound){
-	return function(...args){
-		let argsLength = args.length - 1
-		let handled = 0
-		let newArgs = []
-
-		argsBound.forEach(item=>{
-			let curArg;
-			if(item === '_'){
-				curArg = args[handled]
-				handled++
-			}else{
-				curArg = item
-			}
-			newArgs.push(curArg)
-		})
-		func.call(this, ...newArgs)
-	}
-}
-
-let user = {
-  firstName: "John",
-  say(time, phrase, toPerson) {
-    console.log(`[${time}] ${this.firstName} to ${toPerson}: ${phrase}!`);
-  }
-};
-
-user.sayNow = partial(user.say, new Date(), '_', 'Jayden');
-
-user.sayNow("Hello"); // [xx:xx] John to Jayden: Hello
-
-// =======================================================
-
-
-
-
-```
-
+扩展partial函数，让他也可以接受`_`参数作为placeholder -  [Github Jayden partial ](https://github.com/Jayden12138/lodash/blob/main/src/partial.ts)
