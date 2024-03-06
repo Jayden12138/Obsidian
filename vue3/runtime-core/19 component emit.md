@@ -4,10 +4,6 @@
 
 
 
-
-
-
-
 ## others
 
 ### 1. [[Function.prototype.bind]]
