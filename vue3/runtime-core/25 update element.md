@@ -323,7 +323,7 @@ function patchProp(el, key, prevVal, nextVal){
 
 ```
 
-#### 删除（delete）
+#### 删除
 
 foo: foo, bar: bar -> foo: foo -> 删除bar
 
@@ -396,6 +396,294 @@ function patchProps(el, prevProps, nextProps) {
 }
 
 ```
+
+
+
+### 扩展（TODO）
+#### 删除（使用delete操作符）
+
+上述cases中的删除，是通过赋予新对象实现的，触发的是set，但如果使用delete来删除一个对象中的值，并不会触发set，而是会触发proxy中的deleteProperty，这个并没有在reactivity/reactive中实现，所以使用delete没有用
+
+> [Proxy handler.deleteProperty - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/deleteProperty)
+
+
+
+## update Children
+
+这里的children有text 或者 children类型，所以在update children中，按类型可以分为四种
+
+text -> array
+array -> text
+text -> text
+array -> array
+
+### cases
+#### array -> text
+
+```javascript
+
+// ArrayToText.js
+import { h, ref } from '../../lib/guide-mini-vue.esm.js'
+
+const nextChildren = 'newChildren'
+const prevChildren = [h('div', {}, 'A'), h('div', {}, 'B')]
+
+export default {
+	name: 'ArrayToText',
+	setup() {
+		const isChange = ref(false)
+		window.isChange = isChange
+
+		return {
+			isChange,
+		}
+	},
+	render() {
+		const self = this
+		return self.isChange === true
+			? h('div', {}, nextChildren)
+			: h('div', {}, prevChildren)
+	},
+}
+
+
+```
+
+
+
+#### text -> text
+
+```javascript
+
+// TextToText.js
+
+import { h, ref } from '../../lib/guide-mini-vue.esm.js'
+
+const prevChildren = 'oldChildren'
+const nextChildren = 'newChildren'
+
+export default {
+	name: 'TextToText',
+	setup() {
+		const isChange = ref(false)
+		window.isChange = isChange
+
+		return {
+			isChange,
+		}
+	},
+	render() {
+		const self = this
+		return self.isChange === true
+			? h('div', {}, nextChildren)
+			: h('div', {}, prevChildren)
+	},
+}
+
+
+```
+
+
+
+
+#### text -> array
+
+```javascript
+
+// TextToArray.js
+
+import { h, ref } from '../../lib/guide-mini-vue.esm.js'
+
+const prevChildren = 'newChildren'
+const nextChildren = [h('div', {}, 'A'), h('div', {}, 'B')]
+
+export default {
+	name: 'ArrayToText',
+	setup() {
+		const isChange = ref(false)
+		window.isChange = isChange
+
+		return {
+			isChange,
+		}
+	},
+	render() {
+		const self = this
+		return self.isChange === true
+			? h('div', {}, nextChildren)
+			: h('div', {}, prevChildren)
+	},
+}
+
+
+
+
+```
+
+
+
+#### array -> array
+
+
+
+
+
+
+### resolve
+
+#### array -> text
+
+1. 删除旧节点中的children
+2. 渲染text  setElementText
+
+patch -> processElement -> patchElement
+
+```javascript
+
+// runtime-core/renderer.ts
+
+function patchELement(n1, n2, container){
+	...
+
+	const el = (n2.el = n1.el)
+
+	patchChildren(n1, n2, el)
+	
+	patchProps(...)
+}
+
+
+function patchChildren(n1, n2, container){
+	const { children: c1, shapeFlag: prevShapeFlag } = n1;
+	const { children: c2, shapeFlag: nextShapeFlag } = n2;
+
+	if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
+		if(nextShapeFlag & ShapeFlags.TEXT_CHILDREN){
+			// array -> text
+			// 1. 删除旧节点中的children
+			unmountChildren(c1)
+
+			// 2. 渲染text
+			hostSetElementText(container, c2)
+		}
+	}
+
+
+}
+
+
+function unmountChildren(children){
+	children.forEach({el}=>{
+		hostRemove(el)
+	})
+}
+
+
+
+// runtime-dom/index.ts
+
+
+function remove(el){
+	const parent = el.parentNode
+	if(parent){
+		parent.removeChild(el)
+	}
+}
+
+
+function setElementText(container, text){
+	container.textContent = text;
+}
+
+```
+
+
+
+#### text -> text
+
+直接调用`hostSetElementText`替换即可
+
+```javascript
+
+// text -> text
+
+hostSetElementText(container, c2)
+
+```
+
+
+#### text -> array
+1. 清空原来的内容
+2. mount Array
+	1. 数组中是vnode，这里需要mount
+
+
+这里需要改两点
+1. mountChildren原来接收第一个参数为vnode，需要改为children
+2. mountChildren需要接收参数parentComponent，在patchChildren这里需要添加
+
+```javascript
+
+
+if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
+	if(nextShapeFlag & ShapeFlags.ARRAY_CHILDREN){
+		// text -> array
+		// 1. 清空旧节点的内容
+		hostSetElementText(container, '')
+
+		// 2. mountChildren
+		mountChildren(c2, container, parentComponent)
+	}
+}
+
+
+```
+
+
+
+
+#### array -> array
+
+> 双端对比（diff）
+> -> 找出乱序部分
+
+
+
+
+```javascript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
