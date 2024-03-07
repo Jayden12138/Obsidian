@@ -1,0 +1,41 @@
+
+> 当count更新时，视图需要更新
+
+```javascript
+
+import { h, ref } from '../../lib/guide-mini-vue.esm.js'
+
+export const App = {
+	name: 'App',
+	setup() {
+		const count = ref(0)
+
+		const onClick = () => {
+			count.value++
+			console.log(count.value)
+		}
+
+		return {
+			count,
+			onClick,
+		}
+	},
+	render() {
+		console.log(this.count)
+		return h(
+			'div',
+			{
+				id: 'root',
+			},
+			[
+				h('div', {}, 'count: ' + this.count),
+				h('button', { onClick: this.onClick }, 'update'),
+			]
+		)
+	},
+}
+
+
+```
+
+
