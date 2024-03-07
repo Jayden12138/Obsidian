@@ -525,6 +525,83 @@ export default {
 #### array -> array
 
 
+##### 左侧对比
+
+
+```javascript
+
+// 1. 左侧的对比
+// (a b) c
+// (a b) d e
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'E' }, 'E'),
+]
+
+// init: i = 0, e1 = 2, e2 = 3
+// 左端对比: i = 2, e1 = 2, e2 = 3
+
+```
+
+
+##### 右端对比
+
+```javascript
+
+
+// 2. 右侧的对比
+// a (b c)
+// d e (b c)
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+]
+const nextChildren = [
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+]
+
+// init: i = 0, e1 = 2, e2 = 3
+// 左端对比: i = 0, e1 = 2, e2 = 3
+// 右端对比: i = 0, e1 = 0, e2 = 1
+
+```
+
+##### 新的比老的长 创建新的
+
+```javascript
+
+// 3. 新的比老的长 创建新的
+// 左侧
+// (a b)
+// (a b) c
+const prevChildren = [h('p', { key: 'A' }, 'A'), h('p', { key: 'B' }, 'B')]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+]
+
+// init: i = 0, e1 = 1, e2 = 2
+// 左端对比: i = 2, e1 = 1, e2 = 2
+// 右端对比: i = 2, e1 = 1, e2 = 2
+// i <= e2  [i, e2] -> patch 
+
+
+```
+
+
+
 
 
 
@@ -648,9 +725,118 @@ if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
 > -> 找出乱序部分
 
 
+##### 左侧对比
 
 
 ```javascript
+
+// 1. 左侧的对比
+// (a b) c
+// (a b) d e
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'E' }, 'E'),
+]
+
+// init: i = 0, e1 = 2, e2 = 3
+// 左端对比: i = 2, e1 = 2, e2 = 3
+
+```
+
+
+##### 右端对比
+
+```
+
+```
+
+
+
+
+##### 新的比老的长 创建新的
+
+```javascript
+
+// 新的比老的长
+// i > e1 && i <= e2
+
+
+
+```
+
+这里insert使用的是append，只能在后边添加，如果在左侧有新元素则会添加失败，他会添加到末尾，这里需要对insert方法进行重新修改，使用insertBefore
+
+
+```javascript
+
+// runtime-dom/index.ts
+
+function insert(el, container, anchor){
+	container.insertBefore(el, anchor = null)
+}
+
+
+
+// runtime-core/renderer.ts
+// 实现和不一样，但感觉没啥影响
+
+for (let j = e2; j >= i; j--) {
+	const anchor = c2[e2 + 1].el || null
+	patch(null, c2[j], container, parentComponent, anchor)
+	e2--
+}
+
+// 原
+const nextPos = e2 + 1;
+const anchor = nextPos < l2 ? c2[nextPos].el : null;
+while (i <= e2) {
+  patch(null, c2[i], container, parentComponent, anchor);
+  i++;
+}
+
+
+```
+
+
+##### 老的比新的长 删除
+```
+// 老的比新的长
+// i > e2 && i <= e1
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+##### 乱序部分
+
+
+
+
+
+```javascript
+
+// i <= e1 && i <= e2
+
+
+
 
 
 
@@ -670,7 +856,6 @@ if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
 
 
 ```
-
 
 
 
