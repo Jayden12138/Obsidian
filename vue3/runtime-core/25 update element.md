@@ -1091,24 +1091,6 @@ for c2 倒着遍历 ->
 */
 
 
-j = sequence.length - 1
-newIndexToOldIndexMap
-
-1. j < 0 -> 不需要移动的已经处理完了，剩余的都需要hostInsert
-2. newIndexToOldIndexMap[x] => 0 -> patch
-3. newIndexToOldIndexMap[x] !== 0
-	1. j -> sequence[j] === curIdx ?
-		1. 
-
-
-
-
-
-
-
-
-
-
 ```
 
 
