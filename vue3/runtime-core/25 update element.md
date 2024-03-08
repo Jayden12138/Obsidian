@@ -602,8 +602,99 @@ const nextChildren = [
 
 
 
+##### 中间对比
+
+###### 删除
+
+1. 删除老的(老的里面存在，新的里面不存在)
+
+```javascript
+
+// a b (c d) f g
+// a b (e c) f g
+// D 节点在新的里面没有需要删除
+// C 节点 props 也发生了变化
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C', id: 'c-prev' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C', id: 'c-next' }, 'C'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+
+```
 
 
+2. 删除 优化
+
+
+```javascript
+
+
+// a b (c e d) f g
+// a b (e c) f g
+// 当所有的新的节点都对比完了，老节点还存在元素，这些元素都可以被删除
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C', id: 'c-prev' }, 'C'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'Z' }, 'Z'),
+	h('p', { key: 'X' }, 'X'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C', id: 'c-next' }, 'C'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+
+
+```
+
+
+###### 移动
+
+```javascript
+
+// a b (c d e) f g
+// a b (e c d) f g
+// 只需要移动e
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+
+
+```
 
 
 ### resolve
@@ -825,26 +916,189 @@ while (i <= e2) {
 
 
 
-##### 乱序部分
+##### 中间对比
 
+`i <= e1 && i <= e2`
 
+###### 删除
+
+1. 删除老的(老的里面存在，新的里面不存在)
+
+> 1. 遍历新节点创建`newIndexMap`
+> 2. 遍历老节点 通过 `key` + `newIndexMap` 查询在新节点中的`newIndex`
+> 	1. key 如果不存在，则需要遍历新节点(时间复杂度 O(n))
+> 	2. key 存在 则直接去newIndexMap中获取newIndex(时间复杂度 O(1))
+> 3. 获取到newIndex后进行判断
+> 	1. newIndex 为 undefined 则说明当前旧节点在新的节点中不存在，执行remove
+> 	2. newIndex 有值，则执行patch（这里有两种情况，一种需要移动，一种不需要可以直接patch）
 
 
 
 ```javascript
 
-// i <= e1 && i <= e2
+// 删除老的(老的里面存在，新的里面不存在)
+// a b (c d) f g
+// a b (e c) f g
+// D 节点在新的里面没有需要删除
+// C 节点 props 也发生了变化
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C', id: 'c-prev' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C', id: 'c-next' }, 'C'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
 
 
 
+```
+
+
+2. 删除 优化（patched, toBePatched）
+
+> 这里是一种特殊情况，如果当前新旧节点都对比完了(例如下面的CE节点)
+> 此时老节点中还存在一些节点（DZX）
+> 这些节点并不需要去获取newIndex，可以直接进行remove
+
+```javascript
+
+
+// a b (c e d) f g
+// a b (e c) f g
+// 当所有的新的节点都对比完了，老节点还存在元素，这些元素都可以被删除
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C', id: 'c-prev' }, 'C'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'Z' }, 'Z'),
+	h('p', { key: 'X' }, 'X'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C', id: 'c-next' }, 'C'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+
+
+```
+
+
+###### 移动
+
+> 寻找最长递增子序列 这些是不需要改变的，除了这个子序列之外的是不稳定的元素，需要进行移动 
+> 算法： [[最长递增子序列]]
+
+
+```javascript
+
+// a b (c d e) f g
+// a b (e c d) f g
+// 只需要移动e
+const prevChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'C' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+	h('p', { key: 'A' }, 'A'),
+	h('p', { key: 'B' }, 'B'),
+	h('p', { key: 'E' }, 'E'),
+	h('p', { key: 'C' }, 'C'),
+	h('p', { key: 'D' }, 'D'),
+	h('p', { key: 'F' }, 'F'),
+	h('p', { key: 'G' }, 'G'),
+]
 
 
 
+// c1: a b (c d e) f g
+// c2: a b (e c d) f g
+
+// init i = 0, e1 = 6, e2 = 6 // toBePatched = 3, patched = 0
+// 左端对比 i = 2, e1 = 6, e2 = 6
+// 右端对比 i = 2, e1 = 4, e2 = 4
+
+// for c2 -> newIndexMap: { E: 2, C: 3, D: 4 }
+
+// toBePatched => newIndexToOldIndexMap: [0, 0, 0]
+
+/** 
+for c1 -> 
+	s1: 2 -> C 
+		-> newIndexMap[C] => 3 
+		-> newIndexToOldIndexMap[newIndex - s2] = s1 + 1
+		=> newIndexToOldIndexMap[1] = 3
+	s1: 3 -> D
+		-> newIndexMap[D] => 4
+		=> newIndexToOldIndexMap[2] = 4
+	s1: 4 -> E 
+		-> newIndexMap[E] => 2
+		=> newIndexToOldIndexMap[0] = 5
+
+*/
+
+// newIndexToOldIndexMap: [5, 3, 4]
+
+// sequence = getSequence(newIndexToOldIndexMap) => [1, 2] (最长递增子序列)
+
+// noNeedToMoveIdx = sequence.length - 1 => 1
+
+// for c2 -> 
+// newIndexToOldIndexMap中值为0的话，表示该节点需要新增，在老节点中并没有这个的坐标
+
+/** 
+c1: a b (c d e) f g
+c2: a b (e c d) f g
+		[5 3 4]
+
+sequence => [1,2]
+
+for c2 倒着遍历 -> 
+	s2: 4 -> D
+		-> index = e2 - s2 = 2
+		-> sequence[noNeedToMoveIdx] => 2 === index
+		-> 不需要处理
+		-> noNeedToMoveIdx-- => noNeedToMoveIdx = 0
+	s2: 3 -> C
+		-> index = e2 - s2 = 1
+		-> sequence[noNeedToMoveIdx] => 1 === index
+		-> 不需要处理
+		-> noNeedToMoveIdx-- => noNeedToMoveIdx = -1
+	s2: 2 -> E
+		-> noNeedToMoveIdx < 0
+		-> patch
+
+*/
 
 
+j = sequence.length - 1
+newIndexToOldIndexMap
 
-
-
+1. j < 0 -> 不需要移动的已经处理完了，剩余的都需要hostInsert
+2. newIndexToOldIndexMap[x] => 0 -> patch
+3. newIndexToOldIndexMap[x] !== 0
+	1. j -> sequence[j] === curIdx ?
+		1. 
 
 
 
@@ -861,12 +1115,73 @@ while (i <= e2) {
 
 
 
+```
 
 
 
+/**
+c1: a b (c d e) f g
+c2: a b (e c d) f g
+
+i: 2
+s1: 2
+s2: 2
+e1: 4
+e2: 4
+
+newIndexToOldIndexMap: [0, 0, 0]
+
+需要确定在旧节点中哪几个不需要进行移动
+
+这里不需要移动的是cd，相对位置是没有改变的 => 找出最长递增子序列
+
+for c1 -> 
+C -> newIndexMap[C] => 3
+D -> newIndexMap[D] => 4
+D -> newIndexMap[E] => 2
+这里是说明C在新节点中的坐标为3，D的newIndex为4
+s2: 2
+
+s1: 2
+newIndexToOldIndexMap[C newIndex - s2] = s1 + 1
+== newIndexToOldIndexMap[1] = 3
+
+newIndexToOldIndexMap: [0, 3, 0]
+
+s1: 3
+newIndexToOldIndexMap[D newIndex - s2] = s1 + 1
+== newIndexToOldIndexMap[2] = 4
+
+newIndexToOldIndexMap: [0, 3, 4]
+
+s1: 4
+newIndexToOldIndexMap[E newIndex - s2] = s1 + 1
+== newIndexToOldIndexMap[0] = 5
+
+newIndexToOldIndexMap: [5, 3, 4]
+// 如果看成 [4, 2, 3] => 
+// 这里的相对位置就是新节点的位置
+
+c1: a b (c d e) f g
+c2: a b (e c d) f g
+		[4 2 3]
+		对应旧节点的位置（但0是初始，所以这里都+1）
+
+
+sequence = getSequence(newIndexToOldIndexMap) => [1, 2]
+
+
+for c2 [s2 -> e2] 
+s2: 2 -> 
+s2: 3 -> 
+s2: 4 -> 
+
+
+*/
 
 
 
+```
 
 
 
