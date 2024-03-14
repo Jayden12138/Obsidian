@@ -90,23 +90,21 @@ it('element', () => {
 
 
 
+// <div></div>
+const { openBlock: _openBlock, createElementBlock: _createElementBlock } = Vue
+
+return function render(_ctx, _cache, $props, $setup, $data, $options) {
+	return (_openBlock(), _createElementBlock("div"))
+}
+
+/**
+	这里openBlock不进行实现，openBlock作用为优化
+*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// codegen.spec.ts.snap
+const { createElementVNode: _createElementVNode } = Vue
+return function render(_ctx, _cache) {return _createElementVNode("div")}"
 
 
 
