@@ -1,4 +1,4 @@
-## runner
+## 1. runner
 ### case
 
 ```javascript
@@ -17,11 +17,17 @@
 ```
 ### thinking
 
-1. effect() return runner
-2. const r = runner() == effect.run() 
-3. effect.run return this._fn()
+需要实现三点
+1. effect函数会返回一个runner函数
+2. 当调用runner函数，会执行effect传入的方法
+3. runner的返回值为effect传入方法的返回值
 
-## scheduler
+> this 指向问题: [[Function.prototype.bind]]
+
+
+
+
+## 2. scheduler
 ### case
 
 ```javascript
@@ -52,11 +58,15 @@ it('scheduler', () => {
 });
 ```
 ### thinking
+
+需要实现的点：
 1. 通过 effect 的第二个参数 传入scheduler
 2. effect 第一次正常执行 fn
-3. 当响应式数据发生 set 时，执行 scheduler
-## stop
+3. 当响应式数据发生 set 时（trigger），执行 scheduler
+
+## 3. stop
 ### case
+
 ```javascript
 it('stop', () => {
     let dummy;
