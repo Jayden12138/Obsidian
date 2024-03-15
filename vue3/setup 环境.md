@@ -133,20 +133,6 @@ yarn add tslib --dev
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ```
 
 
@@ -179,32 +165,141 @@ Vue3
 		1. `"test-e2e": "node scripts/build.js vue -f global -d && vitest -c vitest.e2e.config.ts",`
 
 
+```javascript
+
+// pnpm.workspace.yaml
+packages:
+    - 'packages/*'
 
 
--F(--filter 简写): 指定当前命令在哪个文件夹下执行
+// 需要给packages下的每个文件夹都执行pnpm init
+
+
+// 安装依赖
+// -F(--filter 简写): 指定当前命令在哪个文件夹下执行
 `pnpm i @tiny-vue/shared -F @tiny-vue/reactivity`
-reactivity -> shared
+> reactivity -> shared
 
 
 
 
+// 安装好对应所需要的依赖后，导入依赖时 ts会报错，找不到对应的模块
+
+
+// tsconfig.json
+{
+	"compilerOptions": {
+		...,
+		"paths": {
+			"@tiny-vue/*": ["./packages/*/src"]
+		}
+	},
+	"include": ["./packages/*/src", "./packages/*/__test__"]
+}
+
+
+/**
+	1. 这里的paths，是告诉ts，如果遇到以`@tiny-vue`开头的依赖，则去后面的路径去寻找
+	2. include 是优化，可以让ts只处理给定的路径下的文件
+*/
+
+
+
+// 修改相对路径为@tiny-vue/*
 
 
 
 
+// build
+
+// 修改打包的入口文件 以及修改打包后的文件路径
+
+// rollup.config.js
+import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs'
+
+export default {
+	input: './packages/vue/src/index.ts',
+	output: [
+		{
+			format: 'cjs',
+			file: 'packages/vue/dist/tiny-vue.cjs.js',
+		},
+		{
+			format: 'esm',
+			file: 'packages/vue/dist/tiny-vue.esm.js',
+		},
+	],
+	plugins: [typescript(), commonjs()],
+}
 
 
 
 
-
-
-
-
+```
 
 
 
 
 
 # vitest
+
+
+```javascript
+
+
+// 1. 安装vitest
+pnpm i -D vitest
+
+// 如果报错 使用 pnpm i -D vitest -W
+
+
+// vitest.config.js
+// 解决问题：安装vitest后，describe等需要进行import，这里可以进行全局配置
+import { defineConfig } from 'vitest/config'
+import path from 'path'
+
+export default defineConfig({
+	test: {
+		globals: true,
+	},
+	resolve: {
+		alias: [
+			{
+				find: /@tiny-vue\/(\w*)/,
+				replacement: path.resolve(__dirname, 'packages') + '/$1/src',
+			},
+		],
+	},
+})
+
+
+
+// 报错jest.fn()
+// 这里直接改为使用`vi.fn()`即可
+// vi 需要进行导入`import { vi } from 'vitest'`
+
+
+
+
+
+// 删除jest相关
+
+// `pnpm rm jest @types/jest babel-jest`
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
 
 

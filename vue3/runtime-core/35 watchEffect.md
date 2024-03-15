@@ -1,4 +1,5 @@
 
+> [watchEffect - Vue.js](https://cn.vuejs.org/api/reactivity-core.html#watcheffect)
 
 ```javascript
 
@@ -51,6 +52,24 @@ describe('api: watch', () => {
     expect(cleanup).toHaveBeenCalledTimes(2);
   });
 });
+
+https://github.com/Jayden12138/tiny-vue
+
+
+```
+
+
+```
+区别：
+
+reactivity/effect
+watchEffect
+watch
+
+
+reactivity和Vue运行时没有依赖关系
+watchEffect和Vue运行时强相关，默认是在组件渲染之前执行
+渲染时机可以通过设置flush来控制
 
 
 ```
