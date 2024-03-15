@@ -1,5 +1,6 @@
 ## runner
-### UT
+### case
+
 ```javascript
  it('should return runner when call effect', () => {
         let foo = 10
@@ -14,13 +15,15 @@
         expect(r).toBe('foo')
     })
 ```
-###
+### thinking
+
 1. effect() return runner
 2. const r = runner() == effect.run() 
 3. effect.run return this._fn()
 
 ## scheduler
-### UT
+### case
+
 ```javascript
 it('scheduler', () => {
         let dummy;
@@ -48,12 +51,12 @@ it('scheduler', () => {
         expect(dummy).toBe(2);
 });
 ```
-###
+### thinking
 1. 通过 effect 的第二个参数 传入scheduler
 2. effect 第一次正常执行 fn
 3. 当响应式数据发生 set 时，执行 scheduler
 ## stop
-### UT
+### case
 ```javascript
 it('stop', () => {
     let dummy;
@@ -72,13 +75,14 @@ it('stop', () => {
     expect(dummy).toBe(3);
   });
 ```
-### 
+### thinking
+
 1. stop runner
 2. effect -> deps 清空
 
 
 ## onStop
-### UT
+### case
 ```javascript
 it('events: onStop', () => {
     const onStop = jest.fn();
@@ -92,7 +96,7 @@ it('events: onStop', () => {
 
 ```
 
-### 
+### thinking
 1. effect 第二个参数中 传入一个 onStop
 2. 绑定在 effect 对象上，在 stop 调用时判断是否存在 onStop，存在即调用
 

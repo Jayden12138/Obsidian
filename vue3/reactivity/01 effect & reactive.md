@@ -1,4 +1,7 @@
-## UT
+
+
+## cases
+
 ```javascript
 describe('reactive', () => {
     it('happy path', () => {
@@ -19,7 +22,8 @@ describe('reactive', () => {
 })
 ```
 
-##
+## thinking
+
 ```
 reactive(raw) -> return Proxy {get set}
 
@@ -36,4 +40,31 @@ Reflect.set()
 
 ```
 
+## code
 
+ >[commit: effect & reactive -- Jayden Github](https://github.com/Jayden12138/tiny-vue/commit/0f1d85545d0f85ab05b65fdece3eeae869bca4f7)
+
+```javascript
+
+
+
+
+
+
+
+
+
+```
+
+
+
+## question
+
+
+
+
+
+## others
+
+> 1. [[Proxy]]
+> 2. [[Reflect]]
