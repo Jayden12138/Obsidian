@@ -115,6 +115,93 @@ yarn add tslib --dev
 
 # monorepo
 
+> [babel/packages - github](https://github.com/babel/babel/tree/main/packages)
+> [vue3/packages - github](https://github.com/vuejs/core/tree/main/packages)
+> 以上库都采用了monorepo的架构
+
+
+```
+
+优势：
+	1. 共用基础设施，不用重复配置
+	2. 存在依赖的项目之间方便调试
+	3. 第三方库的版本管理更好控制
+
+缺点：
+	1. 项目粒度的权限管理
+	2. 代码量庞大
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+常见
+	1. [npm](https://www.npmjs.com/)
+	2. [yarn](https://yarnpkg.com/)
+	3. [pnpm](https://pnpm.io/zh/)
+	4. [larna](https://lerna.js.org/)
+	5. [turborepo](https://turbo.build/)
+	6. [nx](https://nx.dev/)
+	7. [RushJS](https://rushjs.io/)
+
+> 前三个包管理工具有基础的monorepo，但存在或多或少的问题
+> 后四各自都针对不同的问题场景提供了解决方案
+> 在真实环境中，需要针对不同项目场景去选用合适的工具
+
+
+Vue3
+1. 使用pnpm
+	1. 利用软链接的方式，节约磁盘空间，提高了安装速度
+	2. 创建非扁平化的node_modules文件夹结构
+	3. 对monorepo的支持非常好
+2. build命令
+	1. `pnpm build reactivity` : 只打包`reactivity`
+3. test
+	1. 依赖build（如下，会先执行build，再执行test）
+		1. `"test-e2e": "node scripts/build.js vue -f global -d && vitest -c vitest.e2e.config.ts",`
+
+
+
+
+-F(--filter 简写): 指定当前命令在哪个文件夹下执行
+`pnpm i @tiny-vue/shared -F @tiny-vue/reactivity`
+reactivity -> shared
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
