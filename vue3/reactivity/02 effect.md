@@ -26,7 +26,6 @@
 
 
 
-
 ## 2. scheduler
 ### case
 
@@ -87,8 +86,78 @@ it('stop', () => {
 ```
 ### thinking
 
-1. stop runner
-2. effect -> deps 清空
+1. stop接收runner函数
+2. 在stop中，需要获取到该runner相关的effect收集到的所有依赖，将这些依赖删除即可
+	1. 后续在执行set -> trigger => 当遍历deps时，此时所有依赖已被清空，则不会更新
+
+```javascript
+
+/**
+
+	1. runner <-> effect
+	2. effect.stop <-> deps
+
+
+
+
+	1. stop => runner._effect.stop()
+	2. 
+		1. track -> activeEffect.deps.push(deps)
+		2. effect.stop -> this.deps
+
+*/
+
+
+
+
+class ReactiveEffect{
+	deps: any = []
+	...
+
+	stop(){
+		
+	}
+}
+
+function track(target, key){
+	let depsMap = targetMap.get(target)
+	...
+	
+	let dep = depsMap.get(key)
+	...
+
+	dep.add(activeEffect)
+
+	// 反向收集dep
+	activeEffect.deps.push(dep)
+}
+
+function effect(fn){
+	const _effect = new ReactiveEffect(fn)
+
+	const runner = _effect.run.bind(_effect)
+	runner._effect = _effect
+
+	return runner
+}
+
+
+function stop(runner){
+	runner._effect.stop()
+}
+
+
+
+
+
+```
+
+
+
+小优化点：
+1. 封装cleanupEffect
+2. 引入active：避免多次stop重复执行cleanupEffect
+3. cleanupEffect执行后，length置0（deps中的依赖dep清空后，deps长度并没有归0）
 
 
 ## onStop
@@ -107,7 +176,15 @@ it('events: onStop', () => {
 ```
 
 ### thinking
+
 1. effect 第二个参数中 传入一个 onStop
 2. 绑定在 effect 对象上，在 stop 调用时判断是否存在 onStop，存在即调用
 
+```javascript
+
+// shared/index.ts
+
 export const extend = Object.assign
+
+
+```

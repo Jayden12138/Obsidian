@@ -24,19 +24,18 @@ describe('reactive', () => {
 
 ## thinking
 
+1. reactive需要接收一个变量
+2. 当变量中的值发生get、set等操作需要被拦截（Proxy）
+3. effect接收一个函数fn，首次会执行fn
+4. 当fn中的响应式对象中的值发生改变，也会执行fn
+
 ```
-reactive(raw) -> return Proxy {get set}
 
 get track 收集依赖
 set trigger 触发依赖
 
-effect(fn) -> class ReactiveEffect{} run() 
-
 targetMap -> depsMap -> dep
 targetMap{target -> depsMap{key -> dep}}
-
-Reflect.get()
-Reflect.set()
 
 ```
 
@@ -46,11 +45,73 @@ Reflect.set()
 
 ```javascript
 
+// reactive.ts
+function reactive(raw){
+	return new Proxy(raw, {
+		get(target, key){
+			const res = Reflect.get(target, key)
+			
+			track(target, key)
+			
+			return res
+		},
+		set(target, key, value){
+			const res = Reflect.set(target, key, value)
 
+			trigger(target, key)
+		
+			return res
+		}
+	})
+}
 
+// effect.ts
+const targetMap = new Map()
+let activeEffect
+class ReactiveEffect{
+	private _fn
+	constructor(fn){
+		this._fn = fn
+	}
 
+	run(){
+		activeEffect = this
+		this._fn()
+	}
+}
 
+function effect(fn){
+	let _effect = new ReactiveEffect(fn)
 
+	_effect.run()
+}
+
+function track(target, key){
+	const depsMap = targetMap.get(target)
+
+	if(!depsMap){
+		depsMap = new Map()
+		targetMap.set(target, depsMap)
+	}
+	
+	const dep = depsMap.get(key)
+
+	if(!dep){
+		dep = new Set()
+		depsMap.set(key, dep)
+	}
+
+	dep.add(activeEffect)
+}
+
+function trigger(target, key){
+	const depsMap = targetMap.get(target)
+	const dep = depsMap.get(key)
+
+	for(const effect of dep){
+		effect.run()
+	}
+}
 
 
 
