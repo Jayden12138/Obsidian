@@ -119,6 +119,46 @@ function trigger(target, key){
 
 
 
+## source code
+
+[ reactive - core](https://github1s.com/vuejs/core/blob/main/packages/reactivity/src/reactive.ts#L77)
+
+```javascript
+
+/**
+ * Returns a reactive proxy of the object.
+ *
+ * The reactive conversion is "deep": it affects all nested properties. A
+ * reactive object also deeply unwraps any properties that are refs while
+ * maintaining reactivity.
+ *
+ * @example
+ * ```js
+ * const obj = reactive({ count: 0 })
+ * ```
+ *
+ * @param target - The source object.
+ * @see {@link https://vuejs.org/api/reactivity-core.html#reactive}
+ */
+export function reactive<T extends object>(target: T): UnwrapNestedRefs<T>
+export function reactive(target: object) {
+  // if trying to observe a readonly proxy, return the readonly version.
+  if (isReadonly(target)) {
+    return target
+  }
+  return createReactiveObject(
+    target,
+    false,
+    mutableHandlers,
+    mutableCollectionHandlers,
+    reactiveMap,
+  )
+}
+
+
+
+```
+
 ## question
 
 
