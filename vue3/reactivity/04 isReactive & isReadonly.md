@@ -1,32 +1,76 @@
-> isReactive & isReadonly
-> 思路是一样的，在前一集实现 readonly 时，对 reactive 的重构，将 get 和 set 都统一处理，通过传入的参数 isReadonly 来判断当前需要创建的 get 函数是 reactive 的还是 readonly 的
-> 当访问数据中的字段时会触发 get 操作，即可以在 get 中获取到这个 isReadonly，通过 isReadonly 来判断当前的 target 数据isReactive 或 isReadonly
-# isReactive
-## UT
+
+## case
+
 ```javascript
 
-it('isReactive happy path', () => {
-	const original = { foo: 1 }
-	const observed = reactive(original)
-	expect(observed).not.toBe(original)
-	expect(observed.foo).toBe(1)
-	expect(isReactive(observed)).toBe(true)
-	expect(isReactive(original)).toBe(false)
+describe('reactive', ()=>{
+	it('isReactive happy path', () => {
+		const original = { foo: 1 }
+		const observed = reactive(original)
+		expect(observed).not.toBe(original)
+		expect(observed.foo).toBe(1)
+		expect(isReactive(observed)).toBe(true)
+		expect(isReactive(original)).toBe(false)
+	})
+	it('isReadonly happy path', () => {
+		const original = { foo: 1 }
+		const observed = readonly(original)
+		expect(observed).not.toBe(original)
+		expect(observed.foo).toBe(1)
+		expect(isReadonly(observed)).toBe(true)
+		expect(isReadonly(original)).toBe(false)
+	})
 })
 
 ```
 
-# isReadonly
-## UT
+## thinking
+
+1. isReactive接收一个对象，判断他是否是reactive
+2. 普通对象和响应式对象的区别在于，响应式对象通过reactive包裹了一层，这里可以在reactive方法中做些手脚
+	1. 如果触发了用于拦截的get方法，则说明这个对象经过reactive包裹过，是响应式对象（obj\['__v_isReactive']）
+	2. 在get中，匹配key值，如果当前访问的是__v_isReactive，则返回!isReadonly
+	3. (这里的isReadonly 是在实现readonly时，将reactive、readonly的实现封装后，通过这个flag来区分时readonly或者reactive)
+3. isReadonly 和isReactive差不多，直接返回isReadonly即可
+
 ```javascript
 
-it('isReadonly happy path', () => {
-	const original = { foo: 1 }
-	const observed = readonly(original)
-	expect(observed).not.toBe(original)
-	expect(observed.foo).toBe(1)
-	expect(isReadonly(observed)).toBe(true)
-	expect(isReadonly(original)).toBe(false)
-})
+
+
+```
+
+小优化点：
+1. 使用字符串__v_isReactive不好，使用enum改写
+
+```javascript
+
+export enum ReactiveFlags{
+	IS_REACTIVE = '__v_isReactive'
+}
+
+if(ReactiveFlags.IS_REACTIVE){
+	...
+}
+
+
+```
+
+## code
+
+[isReactive&isReadonly - Jayden Github](https://github.com/Jayden12138/tiny-vue/pull/26)
+
+```javascript
+
+
+```
+
+
+## source code
+
+
+```javascript
+
+
+
 
 ```

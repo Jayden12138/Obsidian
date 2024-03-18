@@ -1,4 +1,5 @@
-## UT
+## case
+
 ```javascript
 it('nested object reactive', () => {
 	  const original = {
@@ -24,4 +25,7 @@ it('nested object reactive', () => {
 	expect(isReadonly(original.bar)).toBe(false);
 })
 ```
+
+
+## thinking
 
