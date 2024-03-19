@@ -107,3 +107,8 @@ class ReactiveEffect{
 ### 优化点
 
 1. dep.add前，对 activeEffect 进行判断是否 has，如果有了就不进行重复的依赖收集
+
+
+## question
+
+1. shouldTrack 定义的位置/run重构

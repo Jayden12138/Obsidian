@@ -29,3 +29,44 @@ it('nested object reactive', () => {
 
 ## thinking
 
+```
+
+proxy getter
+
+```
+
+
+## code
+
+```javascript
+
+
+// 不动原来的对象
+// 在getter中对数据进行包裹
+
+// proxy getter中判断当前访问的数据是否为对象，
+// 如果是对象则通过reactive/readonly进行包裹返回
+// 如果不是对象则走之前的逻辑（返回通过Reflect获取到的原始值）
+
+
+function createGetter(isReadonly){
+	return (target, key)=>{
+		
+		...
+		
+		const res = Reflect.get(target, key)
+
+		if(isObject(res)){
+			return isReadonly ? readonly(res) : reactive(res)
+		}
+
+		...
+
+		return res
+	}
+}
+
+
+
+
+```
