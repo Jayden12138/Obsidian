@@ -21,18 +21,53 @@
   })
 ```
 
-1. get
-2. set
+
+## thinking
+
+```
 
 get
-target[key] 是 ref，则需要返回 target[key].value 反之直接返回(unRef())
+
+ref 返回 ref.value
+非ref 直接返回
+
+（注意：这里逻辑和unRef一致，直接复用unRef即可）
+
 
 set
-如果 target[key]是 ref && newValue 不是 ref ，则需要修改 target[key].value = newValue
-其他情况直接覆盖（Reflect.set()）
+
+// oldVal ref / newVal 非ref 给ref.value赋值
+
+// 直接赋值
+// oldVal ref / newVal ref
+// oldVal 非ref / newVal ref
+// oldVal 非ref / newVal 非ref
+
+
+
+
+
+```
+
+
+## code
+
+
+```
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+```

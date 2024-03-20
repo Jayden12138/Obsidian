@@ -1,18 +1,23 @@
 # happy path
-## UT
+## case
+
 ```javascript
 it('happy path', () => {
 	const a = ref(1)
 	expect(a.value).toBe(1)
 })
 ```
-## 思路
+## thinking
+
+```
 
 因为 ref 也需要收集依赖 触发依赖
 但是相比 reactive 而言，reactive 是接收一个对象，通过 创建 proxy 代理，通过 get 和 set 方法来收集依赖以及触发依赖
 但是 ref 接受的是基础类型，例如 1 、 '123'
 这些并没有 get set 来进行控制
 所以通过 class 来创建
+
+```
 
 ```javascript
 class RefImpl{
