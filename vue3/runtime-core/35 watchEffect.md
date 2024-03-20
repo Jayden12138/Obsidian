@@ -1,6 +1,9 @@
 
 > [watchEffect - Vue.js](https://cn.vuejs.org/api/reactivity-core.html#watcheffect)
 
+
+## case
+
 ```javascript
 
 
@@ -58,6 +61,7 @@ describe('api: watch', () => {
 
 ```
 
+## thinking
 
 ```
 区别：
