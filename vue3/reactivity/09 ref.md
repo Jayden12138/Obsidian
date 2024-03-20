@@ -81,3 +81,27 @@ value isObject -> reactive(value) : value
 
 
 
+
+
+## question
+
+
+```javascript
+
+
+
+第一次盲写没有考虑到的（缺少对应的单测）
+1. 在set value中没有考虑到非基础类型的change判断(Object.is)
+	1. 判断时需要引入一个rawValue，用来对比是否发生了改变(因为这里可以传对象给ref，ref内处理对象时，需要在访问对象属性时，收集依赖，所以这里ref内进行了判断，如果是对象则通过reactive直接包裹一层，这样即可进行依赖的收集)
+
+
+
+
+
+
+
+
+
+
+
+```

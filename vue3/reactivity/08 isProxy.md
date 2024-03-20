@@ -1,4 +1,5 @@
-## UT
+## case
+
 ```javascript
 it('isProxy happy path reactive', () => {
 
@@ -21,6 +22,9 @@ it('isProxy happy path readonly', () => {
 })
 ```
 
+
+## thinking
+
 非常的简单
 
 https://cn.vuejs.org/api/reactivity-utilities.html#isproxy
@@ -29,6 +33,9 @@ https://cn.vuejs.org/api/reactivity-utilities.html#isproxy
 前面已经实现了isReactive 以及 isReadonly
 
 这里只需要调用即可
+
+## code
+
 
 ```javascript
 export const isProxy(value){
