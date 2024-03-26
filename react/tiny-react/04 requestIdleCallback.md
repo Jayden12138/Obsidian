@@ -2,6 +2,9 @@
 [requestIdleCallback - w3c](https://w3c.github.io/requestidlecallback/)
 
 
+[Scheduler - react](https://github.com/facebook/react/blob/1fb18e22ae66fdb1dc127347e169e73948778e5a/packages/scheduler/src/Scheduler.js)
+
+
 ```js
 
 - 问题
