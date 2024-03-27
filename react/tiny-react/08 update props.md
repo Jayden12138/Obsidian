@@ -127,6 +127,9 @@ function updateProps(dom, nextProps, prevProps){
 
 // 提交
 
+function commitWork(){
+
+}
 
 
 // 重复绑定事件，需要移除
