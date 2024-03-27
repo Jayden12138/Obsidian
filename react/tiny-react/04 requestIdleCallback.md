@@ -81,7 +81,7 @@ requestIdleCallback(callback)
 依次进行的任务 -> 链表
 
 child
-sibiling
+sibling
 	需要在处理children时，给child上绑定个sibling的属性
 uncle(.parent.sibling)
 	需要通过 .parent.sibling 进行访问

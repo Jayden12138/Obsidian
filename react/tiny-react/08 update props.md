@@ -58,7 +58,7 @@ if (isSameType) {
 	newWork = {
 		type: child.type,
 		props: child.props,
-		dom: oldChild.dom,
+		dom: oldChild.dom, // 初始创建过一次，这里不需要重复创建
 		parent: work,
 		child: null,
 		sibling: null,
@@ -111,6 +111,7 @@ function updateProps(dom, nextProps, prevProps){
 			if (key.startsWith('on')) {
 				// onClick => click
 				const eventName = key.slice(2).toLocaleLowerCase()
+				dom.removeEventListener(eventName, prevProps[key]) // 重复绑定事件，需要移除， 这里是 prevProps[key]
 				dom.addEventListener(eventName, nextProps[key])
 			} else {
 				dom[key] = nextProps[key]
@@ -119,22 +120,33 @@ function updateProps(dom, nextProps, prevProps){
 	})
 }
 
-
-
-
-
 4. 最后需要提交
 
-// 提交
+function commitWork(work){
+	...
 
-function commitWork(){
-
+	// 这里只处理了创建的逻辑，并没有update
+	if (work.dom) {
+		workParent.dom.append(work.dom)
+	}
+	
+	...
 }
 
+function commitWork(work){
+	...
 
-// 重复绑定事件，需要移除
-tip: 移除的是旧的
-dom.removeEventListener(eventName, prevProps[key])
+	// 根据 tag 区分 当前操作的类型
+	// update 只需要 updateProps
+	if (work.tag === 'placement') {
+		if (work.dom) {
+			workParent.dom.append(work.dom)
+		}
+	} else if (work.tag === 'update') {
+		updateProps(work.dom, work.props, work.alternate.props)
+	}
+
+}
 
 
 
