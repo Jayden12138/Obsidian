@@ -16,12 +16,17 @@
 
 ```js
 
+let deleteArr = []
+
 children.forEach(child=>{
 	...
 })
 
 while(oldFiber){
-	// 这里就是没有处理的兄弟节点
+	// 这里oldFiber就是没有处理的兄弟节点
+	deleteArr.push(oldFiber)
+
+	oldFiber = oldFiber.sibling
 }
 
 
