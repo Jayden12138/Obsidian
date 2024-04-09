@@ -9,6 +9,25 @@
 
 
 
+```js
+
+// 6.判断两个单链表是否相交并找出交点
+
+
+// 160
+
+
+while (p1 !== p2) {
+	// p1 = p1?.next || headB
+	// p2 = p2?.next || headA
+
+	p1 = !p1 ? headB : p1.next
+	p2 = !p2 ? headA : p2.next
+}
+
+// 画图理解 两种写法的差异
+
+```
 
 
 
