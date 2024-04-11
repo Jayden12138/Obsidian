@@ -4,22 +4,24 @@
 - [x] vite ✅ 2024-04-11
 - [x] vue3 ✅ 2024-04-11
 - [x] typescript ✅ 2024-04-11
-
 - [x] vitest ✅ 2024-04-11
+- [x] vue-router ✅ 2024-04-11
+- [x] naive-ui ✅ 2024-04-11
+- [x] pinia(vuex5) ✅ 2024-04-11
+- [x] axios ✅ 2024-04-11
+- [x] unocss ✅ 2024-04-11
 
-- [ ] vue-router
-
-- [ ] pinia(vuex5)
-- [ ] naive-ui
 - [ ] cypress
 - [ ] cypress-component-test
-- [ ] alias
+- [ ] 
+
 - [ ] ci && cd
 - [ ] tailwind css
 - [ ] lint + eslint + prettier
-- [ ] axios
-- [ ] 
-- [ ] path
+
+- [ ] ink-mde
+
+
 
 
 
@@ -110,24 +112,43 @@ export default defineConfig({
 ```
 
 
-### vue router
+## vue router
 
 https://router.vuejs.org/zh/
-
-```
-
-
-
-```
-
-
-
-
-
-
 
 
 
 @types/node
-
 https://www.npmjs.com/package/@types/node
+
+>path
+
+## native-ui
+
+### auto import
+https://www.naiveui.com/en-US/os-theme/docs/import-on-demand
+
+
+```shell
+
+
+// auto import
+pnpm i -D unplugin-vue-components
+
+```
+
+
+## pinia
+
+https://pinia.vuejs.org/
+
+
+## axios
+
+https://axios-http.com/
+
+
+## unocss
+
+https://unocss.dev/
+
