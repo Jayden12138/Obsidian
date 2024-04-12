@@ -1,5 +1,5 @@
 
-
+>https://github.com/Jayden12138/learn-test/tree/base
 
 - [x] vite ✅ 2024-04-11
 - [x] vue3 ✅ 2024-04-11
@@ -11,12 +11,14 @@
 - [x] axios ✅ 2024-04-11
 - [x] unocss ✅ 2024-04-11
 
+
+- [ ] tailwind css
+
+
 - [ ] cypress
 - [ ] cypress-component-test
-- [ ] 
 
 - [ ] ci && cd
-- [ ] tailwind css
 - [ ] lint + eslint + prettier
 
 - [ ] ink-mde

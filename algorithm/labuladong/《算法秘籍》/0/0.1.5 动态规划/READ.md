@@ -1,0 +1,231 @@
+
+
+## 509 斐波那契数
+
+### 暴力穷举
+
+>状态转移方程 === 暴力解
+
+```js
+
+
+// 1. 暴力穷举
+
+
+/*
+ * @lc app=leetcode.cn id=509 lang=typescript
+ *
+ * [509] 斐波那契数
+ */
+
+// @lc code=start
+function fib(n: number): number {
+	// F(0) = 0，F(1) = 1
+	// F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+	// 输入：n = 2
+	// 输出：1
+	// 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
+
+	// 1.
+	// F(20)
+	// = F(19)  + F(18)
+	// = F(18) + F(17) + F(17) + F(16)
+	// = ...
+	return dp(n)
+}
+
+function dp(n: number): number {
+	if (n === 1 || n === 0) {
+		return n
+	}
+	return dp(n - 1) + dp(n - 2)
+}
+// @lc code=end
+
+export { fib }
+
+
+
+```
+
+### 备忘录
+
+```js
+
+
+
+
+// 备忘录
+
+/*
+ * @lc app=leetcode.cn id=509 lang=typescript
+ *
+ * [509] 斐波那契数
+ */
+
+// @lc code=start
+function fib(n: number): number {
+	// F(0) = 0，F(1) = 1
+	// F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+	// 输入：n = 2
+	// 输出：1
+	// 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
+
+	// 2.
+	// F(5)
+	// f5
+	// = f4 + f3
+	// = f3 + f2 + f2 + f1
+	// = f1 + f0 + f1 + f1 + f0 + f1 + f0 + f1
+	// let arr = [f0, f1]
+
+	let arr = new Array(n + 1).fill(0)
+	arr[0] = 0
+	arr[1] = 1
+
+	return dp(arr, n)
+}
+
+function dp(arr: number[], n: number): number {
+	if (n === 1 || n === 0) {
+		return n
+	}
+
+	// 备忘录
+	if (arr[n] !== 0) return arr[n]
+	arr[n] = dp(arr, n - 1) + dp(arr, n - 2)
+
+	return arr[n]
+}
+// @lc code=end
+
+export { fib }
+
+
+
+
+```
+
+### db table
+
+>2 中，通过自顶向下 从底部递归 得出结果
+>构建一个db table，自底向上 从底部最基础的值 递推得出最后结果
+
+
+```js
+
+[0, 1]
+
+f0 f1 f2 f3 f4 f5 f6
+[0, 1, 1, 2, 3, 5, 8, ...]
+
+
+// dp table
+
+/*
+ * @lc app=leetcode.cn id=509 lang=typescript
+ *
+ * [509] 斐波那契数
+ */
+
+// @lc code=start
+function fib(n: number): number {
+	// F(0) = 0，F(1) = 1
+	// F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+	// 输入：n = 2
+	// 输出：1
+	// 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
+
+	// 3.
+	// 构建dp table
+	// 自底向上 递推结果
+
+	let arr = [0, 1]
+
+	for (let i = 2; i <= n; i++) {
+		arr[i] = arr[i - 1] + arr[i - 2]
+	}
+
+	return arr[n]
+}
+// @lc code=end
+
+export { fib }
+
+
+
+
+// dp table - shrik
+
+// 对于 dp(n) 来说 有用的是 dp(n - 1) dp(n - 2)
+// 其他的没有必要进行存储
+
+/*
+ * @lc app=leetcode.cn id=509 lang=typescript
+ *
+ * [509] 斐波那契数
+ */
+
+// @lc code=start
+function fib(n: number): number {
+	// F(0) = 0，F(1) = 1
+	// F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+	// 输入：n = 2
+	// 输出：1
+	// 解释：F(2) = F(1) + F(0) = 1 + 0 = 1
+
+	// 3.
+	// 对于 dp(n) 来说 有用的是 dp(n - 1) dp(n - 2)
+	// 其他的没有必要进行存储
+
+	if (n === 1 || n === 0) return n
+
+	let arr = [0, 1]
+	let res = 0
+
+	for (let i = 2; i <= n; i++) {
+		let num_i_0 = arr[0]
+		let num_i_1 = arr[1]
+
+		res = num_i_0 + num_i_1
+
+		arr[1] = res
+		arr[0] = num_i_1
+	}
+
+	return res
+}
+// @lc code=end
+
+export { fib }
+
+
+
+```
+
+
+
+## 
+
+
+
+```
+
+// 输入：coins = [1, 2, 5], amount = 11
+// 输出：3
+// 解释：11 = 5 + 5 + 1
+
+1.
+
+dp(11)
+
+min(dp(10) dp(9) dp(6))
+
+
+
+
+
+
+
+
+```
