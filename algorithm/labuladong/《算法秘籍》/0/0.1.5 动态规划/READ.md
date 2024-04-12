@@ -332,7 +332,7 @@ export { coinChange }
 ```
 
 
-### 
+### 自底向上 递推
 
 前两种都是 自顶向下 ，通过递归得出结果
 
@@ -340,43 +340,81 @@ export { coinChange }
 
 ```ts
 
-
-[1, 2, 5] 11
-
+/**
 
 
-dp(0)
-[0]
+	[1, 2, 5] 11
+	
+	
+	
+	dp(0)
+	[0]
 
-dp(1)
-[]
+	dp1
+	dp0 dp-1 dp-4
+	min(dp0) + 1 = 1
 
-dp(5)
-min(dp4 dp3 dp0) + 1
-min(2    2   0 ) + 1 = 1
+	dp2
+	dp1 dp0 dp-3
+	min(dp1 dp0 dp-3) + 1
+	min(1 0) + 1 = 1
 
-dp3
-dp2 dp1 dp-2
-min(dp2 dp1 dp-2) + 1
-min(1.   1   ) + 1 = 2
+	dp3
+	dp2 dp1 dp-2
+	min(dp2 dp1 dp-2) + 1
+	min(1.   1   ) + 1 = 2
 
-dp2
-dp1 dp0 dp-3
-min(dp1 dp0 dp-3) + 1
-min(1 0) + 1 = 1
-
-dp1
-dp0 dp-1 dp-4
-min(dp0) + 1 = 1
-
-
-[0, 1, 1, 2, 2, 1, 2, 2, 3, 3, 2]
+	[0, 1, 1, 2, 2, 1, 2, 2, 3, 3, 2]
 
 
+*/
 
+/*
+ * @lc app=leetcode.cn id=322 lang=typescript
+ *
+ * [322] 零钱兑换
+ */
 
+// @lc code=start
+function coinChange(coins: number[], amount: number): number {
+	// 输入：coins = [1, 2, 5], amount = 11
+	// 输出：3
+	// 解释：11 = 5 + 5 + 1
+	// 输入：coins = [2], amount = 3
+	// 输出：-1
 
+	// 自底向上
 
+	/**
+	 *
+	 * dp0
+	 * [0]
+	 *
+	 * dp0 dp1
+	 * dp1 = min(dp0 + dp-1 + dp-4) + 1
+	 * [0, 1]
+	 */
+
+	let dptbale: number[] = new Array(amount + 1).fill(amount + 1)
+
+	dptbale[0] = 0
+
+	for (let i = 1; i <= amount; i++) {
+		// dptable[i]
+		for (let j = 0; j < coins.length; j++) {
+			// coins[j]
+			let currentDp = i - coins[j]
+			if (currentDp < 0) continue
+
+			dptbale[i] = Math.min(1 + dptbale[i - coins[j]], dptbale[i])
+		}
+	}
+
+	return dptbale[amount] === amount + 1 ? -1 : dptbale[amount]
+}
+
+// @lc code=end
+export { coinChange }
 
 
 
