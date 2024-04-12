@@ -209,20 +209,64 @@ export { fib }
 
 
 
-```
+```ts
 
 // 输入：coins = [1, 2, 5], amount = 11
 // 输出：3
 // 解释：11 = 5 + 5 + 1
 
 1.
+暴力穷举
+容易超时
 
-dp(11)
+/*
+ * @lc app=leetcode.cn id=322 lang=typescript
+ *
+ * [322] 零钱兑换
+ */
 
-min(dp(10) dp(9) dp(6))
+// @lc code=start
+function coinChange(coins: number[], amount: number): number {
+	// 输入：coins = [1, 2, 5], amount = 11
+	// 输出：3
+	// 解释：11 = 5 + 5 + 1
+	// 输入：coins = [2], amount = 3
+	// 输出：-1
+
+	return dp(coins, amount)
+}
+
+function dp(coins: number[], amount: number): number {
+	// [1, 2, 5] 11
+	if (amount == 0) return 0
+	if (amount < 0) return -1
+
+	let res = Infinity
+
+	for (let i = 0; i < coins.length; i++) {
+		let subProblem = dp(coins, amount - coins[i])
+		if (subProblem == -1) continue
+		res = Math.min(subProblem + 1, res)
+	}
+
+	return res === Infinity ? -1 : res
+}
+// @lc code=end
+export { coinChange }
 
 
 
+// 2. 备忘录
+
+// 输入：coins = [1, 2, 5], amount = 11
+// 输出：3
+// 解释：11 = 5 + 5 + 1
+
+dp(0) - dp(10)
+[0, 1, 1, 2, 2, 1, 2, 2, 3, 3, 2]
+
+-> dp(10)
+min(dp9 dp8 dp5) + 1
 
 
 
