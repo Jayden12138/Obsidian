@@ -6,17 +6,11 @@
 要求：找到应用的功能，出md，录屏和泳道图（主要体现和大模型的交互，目前看至少涉及两个部分：视频流的理解和如何生成视频）
 
 
-sora
-https://openai.com/index/video-generation-models-as-world-simulators/
-
-sora依然无法解决视频内容生产的全链路问题？
-
 
 
 
 ppt总结：
 
-Sora
 
 市场需求分析/竞品分析
 
@@ -38,33 +32,78 @@ YAYI2.0大模型
 
 智能媒资库
 
-### open sora
+# 竞品
+## Sora
+https://openai.com/index/video-generation-models-as-world-simulators/
+
+
+
+## open sora
 https://github.com/hpcaitech/Open-Sora
 试用： https://huggingface.co/spaces/hpcai-tech/open-sora
+画廊： https://hpcaitech.github.io/Open-Sora/
 
 
 
-
-### mora
+## mora
 https://github.com/lichao-sun/Mora
 通过多代理框架实现通用视频生成
 
-![test image](https://github.com/lichao-sun/Mora/raw/main/image/method.jpg)
-### open-sora plan
+![[Pasted image 20240515170033.png]]
+## open-sora plan
 https://github.com/PKU-YuanGroup/Open-Sora-Plan
 基于转换器的文本到视频扩散系统，使用 T5 的文本嵌入进行训练。
 
-### dynamiCrafter
-https://github.com/Doubiiu/DynamiCrafter
-线上试体验： https://huggingface.co/spaces/Doubiiu/DynamiCrafter
+## dynamiCrafter
 
-静态图像 转为 动态视频
+>https://github.com/Doubiiu/DynamiCrafter
+>线上试体验： https://huggingface.co/spaces/Doubiiu/DynamiCrafter
+>画廊： https://doubiiu.github.io/projects/DynamiCrafter/index.html
+
+利用视频扩散模型 将 静态图像 转为 动态视频
+
 核心：双流图像注入机制，通过结合文本信息和图像内容，使用先进的AI模型和机制，将静态图像转换成动态视频
 - **文本对齐和动态置信度计算**：使用GPT-4来分析文本描述，并将其与视频内容进行匹配，确保生成的视频与文本描述在语义上是一致的。
 - **扩散模型**：利用扩散模型生成视频帧，这是一种生成模型，能够生成高质量的图像和视频内容。
 - **视觉细节指导**：在生成视频时，使用视觉细节指导来确保生成的视频帧与输入图像在视觉上保持一致性。
 - **帧插值**：通过在不同的输入图像之间进行帧插值，生成平滑的视频过渡效果。
 - **GPU加速**：使用高性能的GPU（如RTX 4090）来加速模型的推理过程，减少内存消耗。
+
+
+双流图像注入机制
+![[Pasted image 20240515171114.png]]
+
+
+数据集构建
+![[Pasted image 20240515171057.png]]
+
+
+
+
+### 流程参考：
+
+1. 输入准备： 输入静态图像和描述所需动作的文字提示。
+（文字提示有助于指导动画制作，描述最终视频中预期的动态效果。）
+
+2. 图像和文本编码： 使用 预先训练好的 CLIP 模型 将 图像 编码到 文本对齐的嵌入空间中。
+（这一步骤包括从图像中提取全局语义标记和细节视觉标记，以确保生成的视频保持较高的视觉保真度，并与所描述的动态保持一致。）
+
+3. 利用扩散模型生成视频： DynamiCrafter 的核心功能基于潜在扩散模型（LDM）。
+（这些模型执行前向扩散过程，在图像的潜在表示中添加噪声，然后执行后向过程，对其进行去噪处理，生成视频帧。这一过程以文本提示为条件，以创建连贯、动态的视频序列。）
+
+4. 双流条件图像注入： 这种方法涉及两个主要流：
+
+文本对齐上下文表示： 确保动画上下文与文字提示保持一致。
+视觉细节引导： 在整个动画制作过程中保持原始图像的视觉细节。
+
+帧生成和插值： 模型以 256x256 像素的分辨率生成一系列帧（2 秒钟的片段通常有 16 个帧）。帧的合成可确保平滑过渡和合理的运动路径。
+
+5. 输出视频： 最终输出是一个简短的视频片段。
+
+
+### 可参考文档：
+https://arxiv.org/abs/2310.12190
+https://ar5iv.labs.arxiv.org/html/2310.12190
 
 
 
