@@ -82,7 +82,16 @@ YangDeShun/123456
 答：对
 
 问：prompt示例
-答：（未提供）
+答：
+阅读文章【{title} {content}】，发表一条评论。
+
+阅读文章【{title} {content}】，发表一条【{senti}】情感的评论。
+
+阅读文章【{title} {content}】，发表一条与【{entities}】有关的评论。
+
+阅读文章【{title} {content}】，发表一条【{senti}】情感且与【{entities}】有关的评论。
+
+阅读文章【{title} {content}】，发表一条对【{viewpoint}】持【{stance}】立场的评论。
 
 （from 邹瑞）
 答：前端把这些参数传进来后，后端那边会传给模型，模型会输出结果，后端得到结果还得给前端展示
