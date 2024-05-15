@@ -40,15 +40,19 @@ YAYI2.0大模型
 
 ### open sora
 https://github.com/hpcaitech/Open-Sora
+试用： https://huggingface.co/spaces/hpcai-tech/open-sora
+
+
 
 
 ### mora
 https://github.com/lichao-sun/Mora
+通过多代理框架实现通用视频生成
 
-
+![test image](https://github.com/lichao-sun/Mora/raw/main/image/method.jpg)
 ### open-sora plan
 https://github.com/PKU-YuanGroup/Open-Sora-Plan
-
+基于转换器的文本到视频扩散系统，使用 T5 的文本嵌入进行训练。
 
 ### dynamiCrafter
 https://github.com/Doubiiu/DynamiCrafter
