@@ -169,3 +169,11 @@ export function reactive(target: object) {
 
 > 1. [[Proxy]]
 > 2. [[Reflect]]
+
+
+## update
+
+### targetMap结构更新
+
+targetMap WeakMap
+
