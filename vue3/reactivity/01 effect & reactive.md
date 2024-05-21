@@ -175,5 +175,11 @@ export function reactive(target: object) {
 
 ### targetMap结构更新
 
-targetMap WeakMap
+targetMap WeakMap：存储所有响应式对象及其依赖关系
+depsMap Map：存储单个响应式对象的属性及其依赖关系
+dep Map：存储某个属性对应的所有副作用函数（以及每个副作用函数触发的次数，暂时不知道有啥作用）
+
+
+dep 从之前的Set实现改为了Map，Map允许存储额外的信息，例如依赖的触发次数
+
 
