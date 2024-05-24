@@ -12,7 +12,7 @@
 	- subpackage-compiler-core
 
 - [x] environment setup ✅ 2024-05-17
-- [ ] reactivity 单测
+- [x] reactivity 单测 ✅ 2024-05-24
 
 
 
