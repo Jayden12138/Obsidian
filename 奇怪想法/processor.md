@@ -141,11 +141,8 @@ https://mdxjs.com/docs/
 ```
 
 
-code hike   底层 shiki的使用只有在0.3中有使用到，后面remove了
 
-必须搞懂底层转换的各个节点，以及方式，进而找到适合自己预期的转换方式
 
--- 构建自己的转换器
 
 
 codehike 23年开始有v1.0的打算
@@ -201,4 +198,133 @@ focus=1,3:5,6[1:4,7:9] combines the above examples
 
 
 ## v0.3
+
+---
+阅读codehike
+
+remove shiki
+必须搞懂底层转换的各个节点，以及方式，进而找到适合自己预期的转换方式 -- 构建自己的转换器（最好不依赖，shiki在0.14 -> 1.6.4改变很大，在后续维护也很不方便，可以在前期进行快速迭代开发，但还是不依赖的好）
+
+- prism-react-renderer
+- clsx
+
+prism-react-renderer
+需要了解下prism和他的关系，目前使用的是vue3+ts所以这个用不到，但有必要了解下基础的用法
+
+
+clsx 对classname进行处理的，后续在转换器中可能需要
+
+
+
+## utils
+
+### focus
+
+
+#### parseExtremes
+// Transforms something like
+// - "1:3" to {start:1, end: 3}
+// - "4" to {start:4, end:4}
+
+#### mapFocusToLineNumbers
+
+```
+
+1:2,3[1:5,7]
+
+=> {
+	1: true,
+	2: true,
+	3: [
+		{start: 1, end: 5},
+		{start: 7, end: 7}
+	]
+}
+
+
+```
+
+#### relativeToAbsolute
+
+![[Pasted image 20240619154715.png]]
+
+前两个都好理解，第三个不太懂，为什么需要转换成这样
+
+
+
+### color
+
+好像是自定义那块有用到，直接定义颜色，这里作为一个工具使用吧，暂时没看到哪里调用
+
+#### hexToObject
+
+```ts
+
+"#ff88ff"
+
+=> {
+	"a": 1,
+	"b": 255,
+	"g": 136,
+	"r": 255,
+}
+
+
+```
+
+#### objectToHex
+
+```ts
+
+{ r: 255, g: 136, b: 255, a: 0.5 }
+
+
+=> "#ff88ff80"
+
+
+```
+
+
+### theme
+
+额，工具吧
+
+#### transparent
+
+```ts
+
+"#ffffff", 0.5
+
+=> "#ffffff80"
+
+
+```
+
+
+## smooth-code
+
+### splitter
+
+#### splitTokens
+
+![[Pasted image 20240619161020.png]]
+
+
+
+
+
+
+
+
+
+---
+
+需要了解下
+- @docusaurus/core
+
+
+
+
+可以选择了解
+- shiki
 
