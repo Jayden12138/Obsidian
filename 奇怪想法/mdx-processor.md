@@ -200,7 +200,36 @@ focus=1,3:5,6[1:4,7:9] combines the above examples
 ## v0.3
 
 ---
+
+# @mdx-js/mdx
+
+
+## runSync
+
+
+```ts
+
+import { runSync } from "@mdx-js/mdx"; 
+
+const content = ` # Hello, MDX! This is a **markdown** document with JSX embedded. `; 
+
+const result = runSync(content); 
+console.log(result);
+
+
+```
+
+
+
+
+
 # codehike
+
+>项目跑起来了，demo也能看了，因为单测的用例太少了，所以只能根据demo去写一些test来调试去了解每个过程
+>cd packages/mdx
+>yarn install
+>yarn dev
+>yarn test
 
 remove shiki
 必须搞懂底层转换的各个节点，以及方式，进而找到适合自己预期的转换方式 -- 构建自己的转换器（最好不依赖，shiki在0.14 -> 1.6.4改变很大，在后续维护也很不方便，可以在前期进行快速迭代开发，但还是不依赖的好）
