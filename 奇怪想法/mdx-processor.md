@@ -200,19 +200,22 @@ focus=1,3:5,6[1:4,7:9] combines the above examples
 ## v0.3
 
 ---
-阅读codehike
+# codehike
 
 remove shiki
 必须搞懂底层转换的各个节点，以及方式，进而找到适合自己预期的转换方式 -- 构建自己的转换器（最好不依赖，shiki在0.14 -> 1.6.4改变很大，在后续维护也很不方便，可以在前期进行快速迭代开发，但还是不依赖的好）
 
 - prism-react-renderer
 - clsx
+- @mdx-js/mdx
 
 prism-react-renderer
 需要了解下prism和他的关系，目前使用的是vue3+ts所以这个用不到，但有必要了解下基础的用法
 
 
 clsx 对classname进行处理的，后续在转换器中可能需要
+
+@mdx-js/mdx  很关键，用来处理mdx文件
 
 
 
