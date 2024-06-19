@@ -145,12 +145,48 @@ https://mdxjs.com/docs/
 
 
 
+---
 
-- [shiki](https://github.com/shikijs/shiki)
+---
+
+# 整理
+
+## v0.1
+
+[v0.1 - codehike playground](https://play.codehike.org/#N4IgtgJgHiBcIB0B2ADNAHAngFwBYHslkAbAU2wAIBjfCUigXgoHIAVXASwGcLuKBhWvQASHANalmydACcOSbAAoadAJTIaSLvjIA6YvgDmyoetRpkyNCix5CFXKWIHdWEuWpDGLdnz6C6ClEJKSRZeSUVUjNNbT0DYyiza0skAB5+YV0A0gA+KwwcAiQHJxc3JDJKKO82Th5-IQBGUPCFEzUNQjjSfSMO6IKUIdti0ud8JtdMd2qvJjq-HhyAJla5dqSurR1ehIHki3SAekzsoXyiK9Sb67vbh-unx+QQABoQKi4uOBBXGVIADcOKQAO4AWk02AAhvJSDIKMAKMgKBQwNCZIZ5LAKAAOdBQADcyKQAF93p9CAAzDiGOCgYhwgByAFcwAAjeE-WDYGQs0gfLgEUGCLAAIRZ2GwhDgvP5H2hkvwABl5GJZXyBSA8KQwKRfujsPCONDiOCIBiJDIQKTSUA)
+  
+ 通过mdx定义的code片段，转换为对应html代码进行展示
+
+需要注意的：
+- line number
+- copy button
+- theme
+- 带文件名的
+- 多文件
 
 
+![[Pasted image 20240619135755.png]]
+
+## v0.2
+
+[v0.2 - codehike playground](https://play.codehike.org/#N4IgtgJgHiBcIB0B2BiFACAZgewMYFcBnZZHAwgXgEZlCBTAGztwBdD0WALOrASwCdCLdA15I6JJGSIUAzLACstRszYdu6fgEMkAcx7ZMIsXXayO2dEqSk8MqgG0A7LACcAXWVNW7Lj1zYDPhgSOxOFuiu6IbqPJgCQsbiktKUVAA08grpAGwOVLAALOkuHsgBYABGJr4aWpXYAG48dFBaYAAOTMQ2qGjore1dpil2acgABlMdAJ5c2Ejo3AwM2AB0s1hj1Mhae-sH+7uHJ1rHpwfnF3tX17cXk1Oj5HKKjxOz84vLqxszWy8svdTsCTqDDuDLkhrlCYUckFMJs97M43J4EdM5pwFktGL9NqlqKiytC4WdSXDIfCyeSaVSbhikb1CRksrl8kUSmj3p9sd88esCdtWYp2QViqV0XSKTD6bSyXLFYzJCreqr1WrNZIQOkQLhCIQ4CANvw6I1eHQAO4AWgCSBYWhM-HQwHQyHQ6DAWn4ujEsHQAA4OlAANxupAAXx1eoW8V0cFAonEADlgpU6II4JgtAx6LrCNjLQBhbCzABC+BYLAWWZzeZAWkr2AAMmIANa13N0XV+MB0I1elgZ3g560Qb1tjMgCMRoA)
+
+focus 的基础实现
+
+```ts
+
+focus=1 selects the first line
+
+focus=3:5 selects the range of lines 3 to 5
+
+focus=1[7:9] selects the columns 7 to 9 of the first line
+
+focus=1,3:5,6[1:4,7:9] combines the above examples
+
+```
+
+![[Pasted image 20240619141449.png]]
 
 
-扩展
-- [@shikijs/twoslash](https://shiki.tmrs.site/packages/twoslash)
-- 
+## v0.3
+
