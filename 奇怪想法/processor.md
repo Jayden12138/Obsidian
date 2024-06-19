@@ -1,0 +1,156 @@
+
+
+>  定个flag
+>  0618-0718 v0.1（shiki mdx 基础mdx转换code）
+>  0801 v0.2（支持特定格式 focus）
+>  0901 v0.3（加入scroll动画）
+>  ...
+>  
+
+
+ - [ ] shiki-processor
+	 - [ ] 阅读
+	 - [ ] 总结
+- [ ] vue-shiki-input
+	- [ ] 阅读
+	- [ ] 总结
+- [ ] shiki
+	- [ ] 使用
+	- [ ] 
+
+
+# shiki
+
+> 在shiki-processor中，底层使用的是shiki
+
+- code（原文本）
+- tokens（标记数组）
+- hast(hypertext abstract syntax tree 超文本抽象语法树)
+
+
+
+# shiki-processor
+
+> 原项目引用的[shiki](https://github.com/shikijs/shiki)，版本0.14.0，后续并没有更新迭代，截止23.06.18，最新版本为shiki@1.6.0
+
+![[Pasted image 20240618141048.png]]
+
+### diff
+
+```
+
+function() {
+	console.log('owo') // [!code --]
+	console.log('uwu') // [!code ++]
+}
+
+
+主题: nord
+行为: has-diff
+codeLine类型: diff remove / add
+
+<pre class="shiki nord has-diff" style="">
+	<code>
+		<span class="line diff remove">
+			<span></span><span></span>...
+		</span>
+		<span class="line diff add"></span>
+	</code>
+</pre>
+
+
+
+```
+
+
+![[Pasted image 20240618143745.png]]
+
+
+```ts diff.test.ts
+
+
+it('generates diffed lines on the same line as their tag', async () => {
+	const snippet = `
+	function() {
+		console.log('owo') // [!code --]
+		console.log('uwu') // [!code ++]
+	}
+	`
+	await testDiffProcessor(snippet)
+})
+
+
+
+
+
+```
+
+
+
+
+
+```ts
+
+目的：配合《重构》，将代码渐进式的展示，用于学习
+
+展示形式可以多样
+
+初步定为code hike中scroll形式
+
+后期可考虑实现step，diff，diff+git等方式
+
+究极后期（趋近完美）
+编辑器：方便用户编写自己的渐进式代码
+
+.mdx文件
+ 支持特定的备注
+ 例如： focus:[1:2, 3]
+
+
+
+将mdx中的文本信息转换为对应的code进行展示
+
+
+
+
+
+```
+
+- [ ] 
+
+
+# .mdx
+
+
+
+https://mdxjs.com/docs/
+
+```
+
+.mdx
+
+\```js app.js [code]
+
+[code...]
+
+\```
+
+
+
+
+```
+
+
+
+
+
+
+
+- [shiki](https://github.com/shikijs/shiki)
+
+
+
+
+扩展
+- [@shikijs/twoslash](https://shiki.tmrs.site/packages/twoslash)
+- 
