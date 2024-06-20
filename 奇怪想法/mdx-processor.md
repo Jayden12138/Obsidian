@@ -319,7 +319,6 @@ clsx 对classname进行处理的，后续在转换器中可能需要
 
 ### theme
 
-额，工具吧
 
 #### transparent
 
