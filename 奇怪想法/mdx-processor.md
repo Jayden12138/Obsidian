@@ -358,4 +358,5 @@ clsx 对classname进行处理的，后续在转换器中可能需要
 
 可以选择了解
 - shiki
+- lz-string
 
