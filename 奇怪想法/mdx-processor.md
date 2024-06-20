@@ -230,6 +230,14 @@ console.log(result);
 >yarn install
 >yarn dev
 >yarn test
+>
+>playground能用！
+>将/packages/mdx打包后，在playground中引用，这样可以做到方便调试
+>
+
+
+
+
 
 remove shiki
 必须搞懂底层转换的各个节点，以及方式，进而找到适合自己预期的转换方式 -- 构建自己的转换器（最好不依赖，shiki在0.14 -> 1.6.4改变很大，在后续维护也很不方便，可以在前期进行快速迭代开发，但还是不依赖的好）
