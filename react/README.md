@@ -9,6 +9,6 @@ turbopack
 
 storybook
 
-- ui 组件库
+- ui component
 mui
-antd（国内使用较多）
+antd
