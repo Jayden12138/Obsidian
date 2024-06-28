@@ -48,7 +48,6 @@ pnpm dev
 
 ```
 
-![[Pasted image 20240411143219.png]]
 
 
 ## vitest
