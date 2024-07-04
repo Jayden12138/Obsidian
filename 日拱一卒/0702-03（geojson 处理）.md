@@ -97,3 +97,14 @@ jq -s '.[0].features + .[1].features' sourve1.geojson source2.geojson | jq '{typ
 
     这部分命令的作用是将最终的 GeoJSON 对象保存到一个新的文件中。
 
+
+
+```shell
+
+# 压缩json文件
+
+jq -c '.' target.geojson > output.json
+
+
+
+```
