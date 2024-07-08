@@ -4,6 +4,35 @@
 > QGIS：用来看.shp/.geojson/.json文件
 
 
+update:
+0708: 甲方提供了一版精确度较为高的世界地图，与原系统中使用的中国地图（带省份）边界几乎重合
+
+在QGIS中，通过excel 链接，给世界地图添加了中文名称字段
+使用jq 合并两份数据
+- 修正省份名称
+- 世界地图中删除中国
+- 中国国界线命名（点选时需要过滤）
+
+
+---
+
+主要命令：
+
+```shell
+
+# merge
+jq -s '.[0].features + .[1].features' sourve1.geojson source2.geojson | jq '{type: "FeatureCollection", features: .}' > target.geojso
+
+#压缩
+jq -c '.' target.geojson > output.json
+
+```
+
+
+
+
+---
+
 ## TODO
 
 - [x] jq 命令 ✅ 2024-07-03
