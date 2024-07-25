@@ -18,12 +18,12 @@
 ### thinking
 
 需要实现三点
+
 1. effect函数会返回一个runner函数
 2. 当调用runner函数，会执行effect传入的方法
 3. runner的返回值为effect传入方法的返回值
 
 > this 指向问题: [[Function.prototype.bind]]
-
 
 
 ## 2. scheduler
